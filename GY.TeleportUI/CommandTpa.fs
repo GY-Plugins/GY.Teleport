@@ -48,7 +48,7 @@ type CommandTpa() =
          | "cancel" | "c" ->
              let firstTpa = Plugin.TeleportData |> Seq.tryFind(fun x -> x.Value.ContainsKey uPlayer.CSteamID)
              if firstTpa.IsNone then
-                 UnturnedChat.Say(Plugin.Instance.Translate("tpa_income_empty"), Color.red)
+                 UnturnedChat.Say(player, Plugin.Instance.Translate("tpa_income_empty"), Color.red)
              else
                  let target = UnturnedPlayer.FromCSteamID firstTpa.Value.Key
                  UnturnedChat.Say(target, Plugin.Instance.Translate("tpa_cancel", uPlayer.DisplayName), Color.yellow)
@@ -58,12 +58,12 @@ type CommandTpa() =
          | _ ->
              let target = UnturnedPlayer.FromName args.[0]
              if isNull target then
-                 UnturnedChat.Say(Plugin.Instance.Translate("player_null", (this :> IRocketCommand).Syntax), Color.red)
+                 UnturnedChat.Say(player, Plugin.Instance.Translate("player_null", (this :> IRocketCommand).Syntax), Color.red)
                  ()
              else
                  
              if Plugin.TeleportData.[target.CSteamID].ContainsKey uPlayer.CSteamID then
-                 UnturnedChat.Say(Plugin.Instance.Translate("tpa_send_already"), Color.red)
+                 UnturnedChat.Say(player, Plugin.Instance.Translate("tpa_send_already"), Color.red)
                  ()
              else
                  
